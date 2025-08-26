@@ -2,7 +2,7 @@ import os
 from notion_client import Client
 from dotenv import load_dotenv
 import random
-
+import yaml
 
 semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
 
@@ -70,7 +70,8 @@ def main():
         plan_diario = {"Almuerzo": plato_almuerzo, "Cena": plato_cena}
         comida_semanal[dia] = plan_diario
 
-    print(comida_semanal)
+    yaml_output = yaml.dump(comida_semanal, indent=4, allow_unicode=True, sort_keys=False)
+    print(yaml_output)
 
 
 
