@@ -115,7 +115,7 @@ def main():
     month = current.strftime("%B")
     week_number = current.isocalendar()[1]
     year = current.year
-    page_title = f"Menú Semanal - {week_number} {month} {year}"
+    page_title = f"Menú Semanal - Week{week_number} {month} {year}"
 
 
     # Use the pages.create method to create the new page.
