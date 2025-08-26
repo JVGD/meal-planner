@@ -3,6 +3,7 @@ from notion_client import Client
 from dotenv import load_dotenv
 import random
 import yaml
+import datetime
 
 semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
 
@@ -70,11 +71,79 @@ def main():
         plan_diario = {"Almuerzo": plato_almuerzo, "Cena": plato_cena}
         comida_semanal[dia] = plan_diario
 
-    yaml_output = yaml.dump(comida_semanal, indent=4, allow_unicode=True, sort_keys=False)
-    print(yaml_output)
+    comida_semanal_yaml = yaml.dump(comida_semanal, indent=4, allow_unicode=True, sort_keys=False)
+    print(comida_semanal_yaml)
+
+
+    children_blocks = []
+    # Iterate through the meal plan data to create formatted paragraph blocks.
+    for day, meals in comida_semanal.items():
+        # Add a heading for the day of the week.
+        children_blocks.append({
+            "object": "block",
+            "type": "heading_2",
+            "heading_2": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": day.capitalize()
+                        }
+                    }
+                ]
+            }
+        })
+        # Add a paragraph for each meal.
+        for meal_type, meal_desc in meals.items():
+            children_blocks.append({
+                "object": "block",
+                "type": "paragraph",
+                "paragraph": {
+                    "rich_text": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": f"{meal_type.capitalize()}: {meal_desc}"
+                            }
+                        }
+                    ]
+                }
+            })
+
+    # Page title
+    current = datetime.datetime.now()
+    month = current.strftime("%B")
+    week_number = current.isocalendar()[1]
+    year = current.year
+    page_title = f"Menú Semanal - {week_number} {month} {year}"
+
+
+    # Use the pages.create method to create the new page.
+    # The method automatically handles the API request formatting.
+    print("Sending request to Notion API...")
+    response = notion.pages.create(
+        parent={"page_id": "1ab301d42b9a8090833bdd5a1fdb3723"},
+        properties={
+            "title": {
+                "title": [
+                    {
+                        "text": {
+                            "content": page_title
+
+                        }
+                    }
+                ]
+            }
+        },
+        children=children_blocks
+    )
+
+    # The response object from the client contains the new page data.
+    print("Successfully created Notion page!")
 
 
 
 if __name__ == "__main__":
     load_dotenv()
     main()
+
