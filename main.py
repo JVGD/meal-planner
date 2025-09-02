@@ -87,39 +87,21 @@ def main():
 
 
     children_blocks = []
-    # Iterate through the meal plan data to create formatted paragraph blocks.
-    for day, meals in comida_semanal.items():
-        # Add a heading for the day of the week.
-        children_blocks.append({
-            "object": "block",
-            "type": "heading_2",
-            "heading_2": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": day.capitalize()
-                        }
+    # Add a paragraph for each meal.
+    children_blocks.append({
+        "object": "block",
+        "type": "paragraph",
+        "paragraph": {
+            "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": f"{comida_semanal_yaml}"
                     }
-                ]
-            }
-        })
-        # Add a paragraph for each meal.
-        for meal_type, meal_desc in meals.items():
-            children_blocks.append({
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "rich_text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": f"{meal_type.capitalize()}: {meal_desc}"
-                            }
-                        }
-                    ]
                 }
-            })
+            ]
+        }
+    })
 
     # Page title
     current = datetime.datetime.now()
@@ -132,7 +114,7 @@ def main():
     # Use the pages.create method to create the new page.
     # The method automatically handles the API request formatting.
     print("Sending request to Notion API...")
-    response = notion.pages.create(
+    _ = notion.pages.create(
         parent={"page_id": "1ab301d42b9a8090833bdd5a1fdb3723"},
         properties={
             "title": {
