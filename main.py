@@ -63,6 +63,7 @@ def main():
 
     # Populating output
     comida_semanal = {}
+    ingredientes = []
     for dia, cena, almuerzo in zip(semana, cenas, almuerzos):
 
         plato_cena = cena['properties']['Name']['title'][0]['plain_text']
@@ -71,7 +72,17 @@ def main():
         plan_diario = {"Almuerzo": plato_almuerzo, "Cena": plato_cena}
         comida_semanal[dia] = plan_diario
 
-    comida_semanal_yaml = yaml.dump(comida_semanal, indent=4, allow_unicode=True, sort_keys=False)
+        # Ingredientes cena y almuerzo
+        ingredientes.extend(
+            [ingrediente['name'] for ingrediente in cena['properties']['Ingredientes']['multi_select']]
+        )
+        ingredientes.extend(
+            [ingrediente['name'] for ingrediente in almuerzo['properties']['Ingredientes']['multi_select']]
+        )
+
+    comida_semanal["Ingredientes"] = list(set(ingredientes))
+
+    comida_semanal_yaml = yaml.dump(comida_semanal, indent=2, allow_unicode=True, sort_keys=False)
     print(comida_semanal_yaml)
 
 
