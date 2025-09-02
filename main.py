@@ -90,8 +90,9 @@ def main():
     # Add a paragraph for each meal.
     children_blocks.append({
         "object": "block",
-        "type": "paragraph",
-        "paragraph": {
+        "type": "code",
+        "code": {
+            "language": "yaml",
             "rich_text": [
                 {
                     "type": "text",
