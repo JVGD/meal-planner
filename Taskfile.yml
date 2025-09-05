@@ -1,0 +1,21 @@
+version: '3'
+
+tasks:
+  install:
+    desc: Install project dependencies
+    cmds:
+      - uv sync --all-groups
+
+  format:
+    desc: Format Python files with isort and black
+    cmds:
+      - uv run isort *.py
+      - uv run black *.py
+    sources:
+      - "*.py"
+
+  run:
+    desc: Run the main script
+    cmds:
+      - uv run python main.py
+    deps: [install]
