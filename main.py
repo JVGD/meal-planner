@@ -1,9 +1,10 @@
-import os
-from notion_client import Client
-from dotenv import load_dotenv
-import random
-import yaml
 import datetime
+import os
+import random
+
+import yaml
+from dotenv import load_dotenv
+from notion_client import Client
 
 semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
 
@@ -17,20 +18,10 @@ def main():
         database_id="25b301d42b9a8065901bcf9ae8e09950",
         filter={
             "and": [
-                {
-                    "property": "Tipo Comida",
-                    "multi_select": {
-                        "contains": "Cena"
-                    }
-                },
-                {
-                    "property": "Tipo de Plato",
-                    "select": {
-                        "equals": "Completo"
-                    }
-                }
+                {"property": "Tipo Comida", "multi_select": {"contains": "Cena"}},
+                {"property": "Tipo de Plato", "select": {"equals": "Completo"}},
             ]
-        }
+        },
     )
     cenas_db = query_cena["results"]
 
@@ -39,23 +30,12 @@ def main():
         database_id="25b301d42b9a8065901bcf9ae8e09950",
         filter={
             "and": [
-                {
-                    "property": "Tipo Comida",
-                    "multi_select": {
-                        "contains": "Almuerzo"
-                    }
-                },
-                {
-                    "property": "Tipo de Plato",
-                    "select": {
-                        "equals": "Completo"
-                    }
-                }
+                {"property": "Tipo Comida", "multi_select": {"contains": "Almuerzo"}},
+                {"property": "Tipo de Plato", "select": {"equals": "Completo"}},
             ]
-        }
+        },
     )
     almuerzos_db = query_almuerzo["results"]
-
 
     # Random per week
     cenas = random.sample(cenas_db, k=len(semana))
@@ -66,18 +46,16 @@ def main():
     ingredientes = []
     for dia, cena, almuerzo in zip(semana, cenas, almuerzos):
 
-        plato_cena = cena['properties']['Name']['title'][0]['plain_text']
-        plato_almuerzo = almuerzo['properties']['Name']['title'][0]['plain_text']
+        plato_cena = cena["properties"]["Name"]["title"][0]["plain_text"]
+        plato_almuerzo = almuerzo["properties"]["Name"]["title"][0]["plain_text"]
 
         plan_diario = {"Almuerzo": plato_almuerzo, "Cena": plato_cena}
         comida_semanal[dia] = plan_diario
 
         # Ingredientes cena y almuerzo
+        ingredientes.extend([ingrediente["name"] for ingrediente in cena["properties"]["Ingredientes"]["multi_select"]])
         ingredientes.extend(
-            [ingrediente['name'] for ingrediente in cena['properties']['Ingredientes']['multi_select']]
-        )
-        ingredientes.extend(
-            [ingrediente['name'] for ingrediente in almuerzo['properties']['Ingredientes']['multi_select']]
+            [ingrediente["name"] for ingrediente in almuerzo["properties"]["Ingredientes"]["multi_select"]]
         )
 
     comida_semanal["Ingredientes"] = list(set(ingredientes))
@@ -85,24 +63,18 @@ def main():
     comida_semanal_yaml = yaml.dump(comida_semanal, indent=2, allow_unicode=True, sort_keys=False)
     print(comida_semanal_yaml)
 
-
     children_blocks = []
     # Add a paragraph for each meal.
-    children_blocks.append({
-        "object": "block",
-        "type": "code",
-        "code": {
-            "language": "yaml",
-            "rich_text": [
-                {
-                    "type": "text",
-                    "text": {
-                        "content": f"{comida_semanal_yaml}"
-                    }
-                }
-            ]
+    children_blocks.append(
+        {
+            "object": "block",
+            "type": "code",
+            "code": {
+                "language": "yaml",
+                "rich_text": [{"type": "text", "text": {"content": f"{comida_semanal_yaml}"}}],
+            },
         }
-    })
+    )
 
     # Page title
     current = datetime.datetime.now()
@@ -111,33 +83,19 @@ def main():
     year = current.year
     page_title = f"Menú Semanal - Week{week_number} {month} {year}"
 
-
     # Use the pages.create method to create the new page.
     # The method automatically handles the API request formatting.
     print("Sending request to Notion API...")
     _ = notion.pages.create(
         parent={"page_id": "1ab301d42b9a8090833bdd5a1fdb3723"},
-        properties={
-            "title": {
-                "title": [
-                    {
-                        "text": {
-                            "content": page_title
-
-                        }
-                    }
-                ]
-            }
-        },
-        children=children_blocks
+        properties={"title": {"title": [{"text": {"content": page_title}}]}},
+        children=children_blocks,
     )
 
     # The response object from the client contains the new page data.
     print("Successfully created Notion page!")
 
 
-
 if __name__ == "__main__":
     load_dotenv()
     main()
-
