@@ -1,10 +1,14 @@
 version: '3'
 
 tasks:
+  env:
+    desc: Set up the environment
+    cmds:
+      - cp .env.example .env
+
   install:
     desc: Install project dependencies
     cmds:
-      - cp .env.example .env
       - uv sync --all-groups
 
   format:
