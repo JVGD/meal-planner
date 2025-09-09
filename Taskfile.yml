@@ -4,6 +4,7 @@ tasks:
   install:
     desc: Install project dependencies
     cmds:
+      - cp .env.example .env
       - uv sync --all-groups
 
   format:
