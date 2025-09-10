@@ -58,29 +58,10 @@ uv sync --all-groups
 # Copy the environment template
 cp .env.example .env
 
-# Edit .env and add your Notion token
-# Get your token from: https://www.notion.so/my-integrations
-```
-
-### 4. Set up Notion Database
-
-Your Notion database should have the following properties:
-
-- **Name** (Title): Recipe name
-- **Tipo Comida** (Multi-select): Contains "Almuerzo" and/or "Cena"
-- **Tipo de Plato** (Select): Should include "Completo" option
-- **Ingredientes** (Multi-select): List of ingredients needed
-
-### 5. Update Database and Page IDs
-
-Edit `main.py` and replace the hardcoded IDs with your own:
-
-```python
-# Replace with your database ID
-database_id="your_database_id_here"
-
-# Replace with your parent page ID
-parent={"page_id": "your_parent_page_id_here"}
+# Edit .env and add your Notion integration details:
+# - NOTION_TOKEN: Get from https://www.notion.so/my-integrations
+# - DATABASE_ID: Your Notion database ID containing recipes
+# - PAGE_ID: Parent page ID where meal plans will be created
 ```
 
 ## 🎯 Usage
@@ -141,4 +122,28 @@ Ingredientes:
 - **Black**: 120 character line length
 - **Isort**: Compatible with Black, imports sorted automatically
 - **Configuration**: Defined in `pyproject.toml`
+
+## 📝 Environment Variables
+
+All configuration is handled through environment variables in your `.env` file:
+
+- `NOTION_TOKEN`: Your Notion integration token
+- `DATABASE_ID`: ID of your Notion recipes database
+- `PAGE_ID`: Parent page ID for meal plan creation
+
+### Getting Your IDs
+
+1. **Notion Token**:
+   - Go to Notion Integrations: `https://www.notion.so/my-integrations`
+   - Create a new integration
+   - Copy the "Internal Integration Token"
+   - Give access to your recipes database and the parent page where you want meal plans created
+
+2. **Database ID**:
+   - Open your recipes database in Notion
+   - Copy the ID from the URL: `https://notion.so/workspace/DATABASE_ID?v=...`
+
+3. **Page ID**:
+   - Open the parent page where you want meal plans created
+   - Copy the ID from the URL: `https://notion.so/workspace/PAGE_ID`
 
