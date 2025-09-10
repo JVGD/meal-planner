@@ -1,6 +1,9 @@
 # 🍽️ Meal Planner
 
-An automated weekly meal planning tool that integrates with Notion to generate random meal plans and shopping lists.
+An automated weekly meal planning tool that integrates with Notion to get your meal database and generate a random meal plan and its shopping list for the week.
+
+<img width="1322" height="578" alt="image" src="https://github.com/user-attachments/assets/9f0bc6b9-a3fb-4a37-a79d-5e19c61ffbc3" />
+
 
 ## 📋 Project Objective
 
@@ -10,7 +13,6 @@ This tool automatically creates weekly meal plans by:
 - 📅 **Generating weekly menus** for all 7 days of the week
 - 🛒 **Creating shopping lists** with all required ingredients
 - 📝 **Publishing to Notion** as formatted weekly meal plan pages
-- 🇪🇸 **Spanish language support** with days of the week in Spanish
 
 ## 🏗️ Project Structure
 
@@ -21,7 +23,7 @@ meal-planner/
 ├── Taskfile.yml         # Task automation (install, format, run)
 ├── .env.example         # Environment variables template
 ├── .python-version      # Python version specification (3.11)
-└── README.md           # This file
+└── README.md            # This file
 ```
 
 ## 🛠️ Prerequisites
@@ -140,48 +142,3 @@ Ingredientes:
 - **Isort**: Compatible with Black, imports sorted automatically
 - **Configuration**: Defined in `pyproject.toml`
 
-## 📦 Dependencies
-
-### Production
-- `notion-client`: Notion API integration
-- `python-dotenv`: Environment variable management
-- `pyyaml`: YAML output formatting
-
-### Development
-- `black`: Code formatting
-- `isort`: Import sorting
-
-## 🤝 Contributing
-
-1. **Format your code**: Run `task format` before committing
-2. **Test your changes**: Run `task run` to ensure functionality
-3. **Follow conventions**: Use Spanish for day names, maintain YAML structure
-
-## 📝 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NOTION_TOKEN` | Your Notion integration token | Yes |
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Missing Notion Token**: Ensure `.env` file exists with valid `NOTION_TOKEN`
-2. **Database Not Found**: Verify database ID and integration permissions
-3. **No Recipes Found**: Check database filters and recipe properties
-4. **Permission Errors**: Ensure Notion integration has access to your database and parent page
-
-### Getting Help
-
-- Check Notion API documentation for database setup
-- Verify your integration has the correct permissions
-- Ensure your database structure matches the expected properties
-
-## 📄 License
-
-This project is for personal use. Please respect Notion's API terms of service.
-
----
-
-*Generated weekly meal plans to make your life easier! 🍽️*
