@@ -1,6 +1,6 @@
 # 🍽️ Meal Planner
 
-An automated weekly meal planning tool that integrates with Notion to get your meal database and generate a random meal plan and its shopping list for the week.
+An automated weekly meal planning tool that integrates with Notion to get your meal database and generate a random meal plan and its shopping list for the week. Beware that the database columns and values are in spanish.
 
 <img width="1322" height="578" alt="image" src="https://github.com/user-attachments/assets/9f0bc6b9-a3fb-4a37-a79d-5e19c61ffbc3" />
 
