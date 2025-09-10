@@ -14,10 +14,10 @@ tasks:
   format:
     desc: Format Python files with isort and black
     cmds:
-      - uv run isort *.py
-      - uv run black *.py
+      - uv run isort src/
+      - uv run black src/
     sources:
-      - "*.py"
+      - "src/*.py"
 
   run:
     desc: Run the meal planner script
