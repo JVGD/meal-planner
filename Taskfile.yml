@@ -20,6 +20,6 @@ tasks:
       - "*.py"
 
   run:
-    desc: Run the main script
+    desc: Run the meal planner script
     cmds:
-      - uv run python main.py
+      - uv run python meal_planner.py
