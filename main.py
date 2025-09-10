@@ -15,7 +15,7 @@ def main():
 
     # Querying cenas
     query_cena = notion.databases.query(
-        database_id="25b301d42b9a8065901bcf9ae8e09950",
+        database_id=os.environ["DATABASE_ID"],
         filter={
             "and": [
                 {"property": "Tipo Comida", "multi_select": {"contains": "Cena"}},
@@ -27,7 +27,7 @@ def main():
 
     # Almuerzos
     query_almuerzo = notion.databases.query(
-        database_id="25b301d42b9a8065901bcf9ae8e09950",
+        database_id=os.environ["DATABASE_ID"],
         filter={
             "and": [
                 {"property": "Tipo Comida", "multi_select": {"contains": "Almuerzo"}},
@@ -87,7 +87,7 @@ def main():
     # The method automatically handles the API request formatting.
     print("Sending request to Notion API...")
     _ = notion.pages.create(
-        parent={"page_id": "1ab301d42b9a8090833bdd5a1fdb3723"},
+        parent={"page_id": os.environ["PAGE_ID"]},
         properties={"title": {"title": [{"text": {"content": page_title}}]}},
         children=children_blocks,
     )
