@@ -22,4 +22,4 @@ tasks:
   run:
     desc: Run the meal planner script
     cmds:
-      - uv run python meal_planner.py
+      - uv run python src/meal_planner.py

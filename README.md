@@ -18,7 +18,8 @@ This tool automatically creates weekly meal plans by:
 
 ```
 meal-planner/
-├── meal_planner.py      # Main application logic
+├── src/
+│   └── meal_planner.py  # Main application logic
 ├── pyproject.toml       # Project dependencies and configuration
 ├── Taskfile.yml         # Task automation (install, format, run)
 ├── .env.example         # Environment variables template
@@ -73,7 +74,7 @@ cp .env.example .env
 task run
 
 # Or directly with uv
-uv run python meal_planner.py
+uv run python src/meal_planner.py
 ```
 
 ### Development Tasks
