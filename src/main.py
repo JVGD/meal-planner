@@ -1,9 +1,5 @@
-from template_package.template_module import Greeter
-
-
 def main() -> None:
-    greeter = Greeter("Paco")
-    print(greeter.greet())
+    print("hellow")
 
 
 if __name__ == "__main__":
